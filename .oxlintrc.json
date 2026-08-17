@@ -1,0 +1,120 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "unicorn", "import", "promise", "node", "oxc"],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "error",
+    "pedantic": "error",
+    "perf": "error",
+    "style": "error",
+    "restriction": "error",
+    "nursery": "off"
+  },
+  "env": {
+    "es2024": true,
+    "node": true,
+    "browser": true
+  },
+  "rules": {
+    "typescript/consistent-type-definitions": ["error", "type"],
+    "import/consistent-type-specifier-style": ["error", "prefer-inline"],
+    "eslint/max-lines": [
+      "error",
+      {
+        "max": 500
+      }
+    ],
+    "eslint/max-statements": ["error", 30],
+    "eslint/sort-imports": "off",
+    "unicorn/number-literal-case": "off",
+    "eslint/no-ternary": "off",
+    "eslint/one-var": "off",
+    "eslint/func-style": "off",
+    "eslint/no-undefined": "off",
+    "eslint/no-use-before-define": "off",
+    "eslint/default-case": "off",
+    "typescript/consistent-return": "off",
+    "eslint/id-length": "off",
+    "eslint/no-magic-numbers": "off",
+    "eslint/sort-keys": "off",
+    "eslint/no-plusplus": "off",
+    "eslint/no-continue": "off",
+    "eslint/no-inline-comments": "off",
+    "eslint/no-bitwise": "off",
+    "eslint/no-control-regex": "off",
+    "eslint/require-unicode-regexp": "off",
+    "unicorn/prefer-code-point": "off",
+    "oxc/no-async-await": "off",
+    "oxc/no-optional-chaining": "off",
+    "oxc/no-rest-spread-properties": "off",
+    "import/no-named-export": "off",
+    "import/group-exports": "off",
+    "import/exports-last": "off",
+    "import/max-dependencies": "off",
+    "import/no-relative-parent-imports": "off",
+    "typescript/prefer-readonly-parameter-types": "off",
+    "import/prefer-default-export": "off",
+    "import/no-nodejs-modules": "off",
+    "node/no-sync": "off",
+    "unicorn/no-null": "off",
+    "unicorn/no-instanceof-builtins": "off",
+    "unicorn/custom-error-definition": "off",
+    "unicorn/no-array-sort": "off",
+    "typescript/explicit-member-accessibility": "off",
+    "unicorn/no-useless-undefined": "off"
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/*.test.ts",
+        "**/*.test.tsx",
+        "**/*.spec.ts",
+        "**/*.spec.tsx",
+        "**/test/**",
+        "**/tests/**",
+        "**/__tests__/**"
+      ],
+      "rules": {
+        "eslint/max-lines": "off",
+        "eslint/max-lines-per-function": "off",
+        "eslint/no-new-wrappers": "off",
+        "eslint/no-loss-of-precision": "off",
+        "unicorn/consistent-function-scoping": "off",
+        "unicorn/prefer-structured-clone": "off",
+        "unicorn/no-new-array": "off",
+        "unicorn/no-null": "off",
+        "typescript/explicit-function-return-type": "off",
+        "typescript/no-unsafe-argument": "off",
+        "typescript/no-unsafe-assignment": "off",
+        "typescript/no-unsafe-call": "off",
+        "typescript/no-unsafe-member-access": "off",
+        "eslint/no-await-in-loop": "off",
+        "unicorn/max-nested-calls": "off",
+        "unicorn/numeric-separators-style": "off"
+      }
+    },
+    {
+      "files": [
+        "*.config.ts",
+        "*.config.mts",
+        "*.config.js",
+        "*.config.mjs",
+        "**/bench/**",
+        "**/scripts/**",
+        "**/bin/**"
+      ],
+      "rules": {
+        "import/no-default-export": "off",
+        "import/no-nodejs-modules": "off",
+        "eslint/no-console": "off",
+        "node/no-sync": "off",
+        "typescript/explicit-function-return-type": "off",
+        "typescript/no-unsafe-argument": "off",
+        "typescript/no-unsafe-assignment": "off",
+        "typescript/no-unsafe-call": "off",
+        "typescript/no-unsafe-member-access": "off"
+      }
+    }
+  ],
+  "ignorePatterns": ["dist", "node_modules", "test/vectors"]
+}

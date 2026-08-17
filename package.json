@@ -1,0 +1,84 @@
+{
+  "name": "chunkjson",
+  "version": "0.1.0",
+  "description": "Streaming JSON for Web Streams: line splitting, NDJSON/JSON Lines, incremental array streaming, and partial JSON for LLM output. Zero dependencies, runs on every runtime.",
+  "keywords": [
+    "ai",
+    "edge",
+    "json",
+    "json-lines",
+    "jsonl",
+    "llm",
+    "ndjson",
+    "partial-json",
+    "sse",
+    "stream",
+    "streaming-json",
+    "streams",
+    "transformstream",
+    "typescript",
+    "web-streams"
+  ],
+  "homepage": "https://github.com/danfry1/chunkjson#readme",
+  "bugs": {
+    "url": "https://github.com/danfry1/chunkjson/issues"
+  },
+  "license": "MIT",
+  "author": "Daniel Fry",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danfry1/chunkjson.git"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsdown",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc",
+    "lint": "oxlint --type-aware",
+    "lint:fix": "oxlint --type-aware --fix",
+    "fmt": "oxfmt",
+    "fmt:check": "oxfmt --check",
+    "check": "bun run fmt:check && bun run lint && bun run typecheck && bun run test && bun run build",
+    "prepublishOnly": "bun run check"
+  },
+  "devDependencies": {
+    "@types/node": "26.2.0",
+    "npm": "11.15.0",
+    "oxfmt": "0.63.0",
+    "oxlint": "1.78.0",
+    "oxlint-tsgolint": "7.0.2001",
+    "tsdown": "0.22.14",
+    "typescript": "7.0.2",
+    "vitest": "4.1.10"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "packageManager": "bun@1.3.14"
+}
