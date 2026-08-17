@@ -39,6 +39,22 @@ describe("parseNdjson", () => {
     ]);
   });
 
+  it("ignores a line containing only whitespace", async () => {
+    const doc = '{"a":1}\n   \n\t\n{"a":2}\n';
+    expect(await collect(streamOf([doc]).pipeThrough(parseNdjson()))).toStrictEqual([
+      { a: 1 },
+      { a: 2 },
+    ]);
+  });
+
+  it("tolerates leading and trailing whitespace around a record", async () => {
+    const doc = '  {"a":1}  \n\t{"a":2}\t\n';
+    expect(await collect(streamOf([doc]).pipeThrough(parseNdjson()))).toStrictEqual([
+      { a: 1 },
+      { a: 2 },
+    ]);
+  });
+
   it("parses scalar records", async () => {
     const doc = '1\n"two"\ntrue\nnull\n[1,2]\n';
     expect(await collect(streamOf([doc]).pipeThrough(parseNdjson()))).toStrictEqual([
