@@ -13,6 +13,24 @@ type Frame =
   | { kind: "array"; value: unknown[] }
   | { kind: "object"; value: Record<string, unknown>; key: string | undefined };
 
+/**
+ * Sets `key` as an own property, as `JSON.parse` does. Plain assignment of
+ * `"__proto__"` would call the inherited setter and replace the object's
+ * prototype with the parsed value instead.
+ */
+function setOwn(object: Record<string, unknown>, key: string, value: unknown): void {
+  if (key === "__proto__") {
+    Object.defineProperty(object, key, {
+      value,
+      writable: true,
+      enumerable: true,
+      configurable: true,
+    });
+  } else {
+    object[key] = value;
+  }
+}
+
 /** Where the tokenizer is within the text. */
 type Mode = "value" | "string" | "escape" | "unicode" | "number" | "literal";
 
@@ -169,7 +187,7 @@ export class IncrementalParser {
     if ("array" in slot) {
       slot.array[slot.index] = this.#buffer;
     } else {
-      slot.object[slot.key] = this.#buffer;
+      setOwn(slot.object, slot.key, this.#buffer);
     }
     this.#events.onUpdate?.();
   }
@@ -310,7 +328,7 @@ export class IncrementalParser {
       return;
     }
     if (top.key !== undefined) {
-      top.value[top.key] = "";
+      setOwn(top.value, top.key, "");
       this.#slot = { object: top.value, key: top.key };
     }
   }
@@ -370,7 +388,7 @@ export class IncrementalParser {
     if (top.key === undefined) {
       throw this.#fail("invalid_json", "object value without a key");
     }
-    top.value[top.key] = value;
+    setOwn(top.value, top.key, value);
     top.key = undefined;
   }
 
@@ -389,7 +407,7 @@ export class IncrementalParser {
       if ("array" in slot) {
         slot.array[slot.index] = text;
       } else {
-        slot.object[slot.key] = text;
+        setOwn(slot.object, slot.key, text);
         if (top?.kind === "object") {
           top.key = undefined;
         }

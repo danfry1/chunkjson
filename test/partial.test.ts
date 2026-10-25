@@ -36,6 +36,24 @@ describe("parsePartialJson", () => {
     expect(out).toContainEqual({ title: "Econ" });
   });
 
+  it("keeps a __proto__ key as an own property, as JSON.parse does", async () => {
+    for (const value of ['{"isAdmin":true}', '"x"', "1", "null", "[1]"]) {
+      const text = `{"__proto__":${value},"a":1}`;
+      for (const size of [1, 1000]) {
+        const out = await collect(
+          streamOf(chunked(text, size)).pipeThrough(parsePartialJson<Record<string, unknown>>()),
+        );
+        const last = out.at(-1);
+        if (last === undefined) {
+          throw new Error(`no snapshot for ${text}`);
+        }
+        expect(Object.getPrototypeOf(last)).toBe(Object.prototype);
+        expect(Object.hasOwn(last, "__proto__")).toBe(true);
+        expect(last).toStrictEqual(JSON.parse(text));
+      }
+    }
+  });
+
   it("shows a string growing character by character", async () => {
     const out = await snapshots(chunked('{"a":"hello"}', 1));
     const values = out
