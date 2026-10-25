@@ -1,6 +1,6 @@
 {
   "name": "chunkjson",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Streaming JSON for Web Streams: line splitting, NDJSON/JSON Lines, incremental array streaming, and partial JSON for LLM output. Zero dependencies, runs on every runtime.",
   "keywords": [
     "ai",
